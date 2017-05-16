@@ -1,0 +1,10 @@
+{
+  "name": "at-carbon-view-button",
+  "version": "1.0.0.0",
+  "private": true,
+  "dependencies": {
+    "tangere": "TangereJs/tangere#master",    
+    "at-theme": "TangereJs/at-theme#master",    
+    "at-doc-viewer": "TangereJs/at-doc-viewer#master"
+  }
+}
