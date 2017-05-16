@@ -4,7 +4,12 @@
   "private": true,
   "dependencies": {
     "tangere": "TangereJs/tangere#master",    
-    "at-theme": "TangereJs/at-theme#master",    
+    "at-theme": "TangereJs/at-theme#master",
+    "at-carbon-icon-button": "TangereJs/at-carbon-icon-button#master",
+    "at-core-dropdown": "TangereJs/at-core-dropdown#master",
+    "at-core-view": "TangereJs/at-core-view#master",
+    "at-doc-snippet": "TangereJs/at-doc-snippet#master",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#master",
     "at-doc-viewer": "TangereJs/at-doc-viewer#master"
   }
 }

@@ -1,16 +1,49 @@
 <link rel="import" href="../tangere/tangere.html" />
 <link rel="import" href="../at-theme/at-theme.html" />
 
+<link rel="import" href="../at-carbon-icon-button/at-carbon-icon-button.html" />
+<link rel="import" href="../at-core-dropdown/at-core-dropdown.html" />
+<link rel="import" href="../at-core-view/at-core-view.html" />
+
 <dom-module id="at-carbon-view-button">
   <template>
     <style>
       :host {
         display: block;
         box-sizing: border-box;
+        position: relative;
+        min-height: 40px;
+      }
+
+      .absolute-container {
+        position: absolute;
       }
     </style>
     
-    <content></content>
+    <div class="absolute-container">
+      <at-carbon-icon-button
+        id="dropdownTrigger"
+        disabled$="[[disabled]]"
+        icon="[[icon]]"
+        color="[[color]]"
+        on-tap="_toggleDropdown"
+      ></at-carbon-icon-button>
+      <at-core-dropdown
+        id="dropdown"
+        position="[[position]]"
+        x-offset="[[xOffset]]"
+        y-offset="[[yOffset]]"
+      >
+        <at-core-view
+          model="[[model]]"
+          model-root="[[modelRoot]]"
+          value="[[value]]"
+          view="[[view]]"
+          placeholder="[[placeholder]]"
+        ></at-core-view>
+      </at-core-dropdown>      
+    </div>
+
   </template>
 </dom-module>
 <script>
@@ -18,9 +51,98 @@
     is: "at-carbon-view-button",
     properties: {
       
-    },
-    ready: function () {
+      disabled: {
+        type: Boolean,
+        value: false
+      },
 
+      icon: {
+        type: String,
+        title: "Icon",
+        value: "now:menu"
+      },
+
+      color: {
+        type: String,
+        value: ""
+      },
+
+      position: {
+        type: String,
+        value: "bottomLeft",
+        xtype: "enum",
+        xvaluelist: [{
+          title: "Top Left",
+          value: "topLeft"
+        }, {
+          title: "Top Right",
+          value: "topRight"
+        }, {
+          title: "Bottom Left",
+          value: "bottomLeft"
+        }, {
+          title: "Bottom Right",
+          value: "bottomRight"
+        }]
+      },
+
+      xOffset: {
+        type: Number,
+        value: 0
+      },
+
+      yOffset: {
+        type: Number,
+        value: 0
+      },
+
+      model: {
+        type: Object,
+        value: null
+      },
+
+      modelRoot: {
+        type: String,
+        value: ""
+      },
+
+      value: {
+        type: Object,
+        value: null,
+        xgridcols: "12",
+        xtype: 'json'
+      },
+
+      view: {
+        type: String,
+        value: null,
+        xtype: 'code',
+        xgridcols: "12",
+        mode: "carbon"
+      },
+
+      placeholder: {
+        type: String,
+        value: "<div class='m'> <div class='placeholder-text'></div><div class='placeholder-text mtsm'></div><div class='placeholder-text mtsm'></div></div>",
+        xtype: 'code',
+        xgridcols: "12",
+        mode: "html"
+      }
+    },
+
+    $meta: [{
+      title: "View Button",
+      type: "element",
+      xtype: "at-carbon-view-button",
+      icon: "now:wrench"
+    }],
+
+    ready: function () {      
+
+    },
+
+    _toggleDropdown: function(event) {
+      this.$.dropdown.toggle(this.$.dropdownTrigger, event);
     }
   });
 </script>
