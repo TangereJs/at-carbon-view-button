@@ -17,10 +17,6 @@
   }
   at-doc-snippet {
     --at-doc-snippet-background-color: #fff;
-
-    --at-doc-snippet-demo: {
-      min-height: 250px;
-    }
   }
 
   .vertical-section-container {
@@ -35,7 +31,9 @@
     <h4>Basic usage</h4>
     <at-doc-snippet>
       <template>
+        <div class="b">box before</div>
         <at-carbon-view-button view="<at-carbon-empty-state></at-carbon-empty-state>"></at-carbon-view-button>
+        <div class="b">box after</div>
       </template>
     </at-doc-snippet>
   </div>
