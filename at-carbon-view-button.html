@@ -8,7 +8,7 @@
 <dom-module id="at-carbon-view-button">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
         box-sizing: border-box;
         position: relative;
@@ -19,29 +19,12 @@
         position: absolute;
       }
     </style>
-    
+
     <div class="absolute-container">
-      <at-carbon-icon-button
-        id="dropdownTrigger"
-        disabled$="[[disabled]]"
-        icon="[[icon]]"
-        color="[[color]]"
-        on-tap="_toggleDropdown"
-      ></at-carbon-icon-button>
-      <at-core-dropdown
-        id="dropdown"
-        position="[[position]]"
-        x-offset="[[xOffset]]"
-        y-offset="[[yOffset]]"
-      >
-        <at-core-view
-          model="[[model]]"
-          model-root="[[modelRoot]]"
-          value="[[value]]"
-          view="[[view]]"
-          placeholder="[[placeholder]]"
-        ></at-core-view>
-      </at-core-dropdown>      
+      <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
+      <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]">
+        <at-core-view model="[[model]]" model-root="[[modelRoot]]" value="[[value]]" view="[[view]]" placeholder="[[placeholder]]"></at-core-view>
+      </at-core-dropdown>
     </div>
 
   </template>
@@ -50,7 +33,7 @@
   Polymer({
     is: "at-carbon-view-button",
     properties: {
-      
+
       disabled: {
         type: Boolean,
         value: false
@@ -137,7 +120,7 @@
       icon: "now:wrench"
     }],
 
-    ready: function () {      
+    ready: function() {
 
     },
 
