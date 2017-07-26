@@ -22,9 +22,7 @@
 
     <div class="absolute-container">
       <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
-      <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]">
-        <at-core-view model="[[model]]" model-root="[[modelRoot]]" value="[[value]]" view="[[view]]" placeholder="[[placeholder]]"></at-core-view>
-      </at-core-dropdown>
+      <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged"></at-core-dropdown>
     </div>
 
   </template>
@@ -125,7 +123,35 @@
     },
 
     _toggleDropdown: function(event) {
-      this.$.dropdown.toggle(this.$.dropdownTrigger, event);
+      if (this.$.dropdown.open) return;
+      
+      var self = this;
+
+      var coreView = this.__coreView = document.createElement('at-core-view');
+      Polymer.dom(this.$.dropdown).appendChild(coreView);
+        
+      coreView.addEventListener('content-changed', function() {
+        self.$.dropdown.toggle(self.$.dropdownTrigger, event);
+        
+        self.$.dropdown.updateContainerAndOutlineSize();
+      });
+      
+      coreView.model = this.model;
+      coreView.modelRoot = this.modelRoot;
+      coreView.value = this.value;
+      coreView.placeholder = this.placeholder;
+      coreView.view = this.view;
+
+      this.async(function() {
+        self.$.dropdown._returnImplToDocumentBody();
+      });
+
+    },
+
+    _handleDropdownOpenChanged: function(event) {
+      if (event.detail.value) return;
+      if (!this.__coreView) return; 
+      Polymer.dom(this.$.dropdown).removeChild(this.__coreView);   
     }
   });
 </script>
