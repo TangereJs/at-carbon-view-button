@@ -152,9 +152,18 @@
       Polymer.dom(this.$.dropdown).appendChild(coreView);
         
       coreView.addEventListener('content-changed', function() {
-        self.$.dropdown.toggle(relativeTo);
+        // @NOTE compatibility issues between at-carbon-view-button, at-core-dropdown and at-now-history come form the current implementation where at-core-dropdown is required to maintain shadow for the dropdown content. at-core-dropdown is (re)calculating the dimensions of #outline (holds the shadow) based on the dropdown content dimensions. It turns out that to provide at-core-dropdown knowledge of dropdown content dimensions you need to resort to tricks to pull it off. One such trick is bellow.
+        // If responsibility for displaying the shadow is transfered to the elements in the dropdown content all the tricks are not necessary anymore, since the element in the dropdown content knows its dimensions best and can adjust the size of shadow accordingly. Most of the time browser can do this automatically.
+
+        // changed the call to .toggle to .show to improve compatibility with at-now-history when at-now-history is in .view property (app-store use case)
+        self.$.dropdown.show(null, relativeTo);
         
-        self.$.dropdown.updateContainerAndOutlineSize();
+        // self.$.dropdown.updateContainerAndOutlineSize();
+
+        // we need to delay the update to improve the compatibility with at-now-history when at-now-history is in .view property (app-store use case)
+        self.async(function() {
+          self.$.dropdown.updateContainerAndOutlineSize();
+        }, 100);
       });
       
       coreView.model = this.model;
