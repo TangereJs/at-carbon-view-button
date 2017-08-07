@@ -11,22 +11,15 @@
       :host {
         display: block;
         box-sizing: border-box;
-        position: relative;
       }
 
       .dropdownTrigger {
         min-height: 40px;
       }
-
-      .absolute-container {
-        position: absolute;
-      }
     </style>
 
-    <div class="absolute-container">
-      <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
-      <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged"></at-core-dropdown>
-    </div>
+    <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
+    <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged"></at-core-dropdown>
 
   </template>
 </dom-module>
