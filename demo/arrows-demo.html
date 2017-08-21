@@ -1,0 +1,110 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="../at-carbon-view-button.html" />
+<link rel="import" href="../../at-carbon-icon-button/at-carbon-icon-button.html" />
+<link rel="import" href="../../at-core-style-classes/at-core-style-classes.html" />
+
+<dom-module id="arrows-demo">
+  <template>
+    <style include="at-core-style-classes">
+      /* this approach doesn't work */
+      /*:root {
+        --at-core-dropdown-arrow-color: #F0FFF0;
+      }*/
+
+       :host {
+        display: block;
+        box-sizing: border-box;
+        margin-top: 64px;
+      }
+
+       :host * {
+        box-sizing: border-box;
+      }
+
+      .row {
+        margin-top: 32px;
+        width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .dropdown-content {
+        height: 250px;
+      }
+
+      .blue {
+        background-color: blue;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .green {
+        background-color: green;
+      }
+
+      .purple {
+        background-color: purple;
+      }
+
+    </style>
+
+    <div class="row layout-horizontal">
+      <div class="flex-6">
+        <h4>Dropdown position is bottom left</h4>
+        <at-carbon-view-button id="dropdown1" arrow position="bottomLeft" view='<div class="dropdown-content style-scope arrows-demo blue"></div>'></at-carbon-view-button>
+      </div>
+      <div class="flex-6">
+        <h4>Dropdown position is bottom left, no arrow</h4>
+        <at-carbon-view-button id="dropdown1a" position="bottomLeft" view='<div class="dropdown-content style-scope arrows-demo blue"></div>'></at-carbon-view-button>
+      </div>
+    </div>
+
+    <div class="row layout-horizontal">
+      <div class="flex-6">
+        <h4>Dropdown position is bottom right</h4>
+        <at-carbon-view-button id="dropdown2" arrow position="bottomRight" view='<div class="dropdown-content style-scope arrows-demo red"></div>'></at-carbon-view-button>
+      </div>
+      <div class="flex-6">
+        <h4>Dropdown position is bottom right, no arrow</h4>
+        <at-carbon-view-button id="dropdown2a" position="bottomRight" view='<div class="dropdown-content style-scope arrows-demo red"></div>'></at-carbon-view-button>
+      </div>
+    </div>
+
+    <div class="row layout-horizontal">
+      <div class="flex-6">
+        <h4>Dropdown position is top left</h4>
+        <at-carbon-view-button id="dropdown3" arrow position="topLeft" view='<div class="dropdown-content style-scope arrows-demo green"></div>'></at-carbon-view-button>
+      </div>
+      <div class="flex-6">
+        <h4>Dropdown position is top left, no arrow</h4>
+        <at-carbon-view-button id="dropdown3a" position="topLeft" view='<div class="dropdown-content style-scope arrows-demo green"></div>'></at-carbon-view-button>
+      </div>
+    </div>
+
+    <div class="row layout-horizontal">
+      <div class="flex-6">
+        <h4>Dropdown position is top right</h4>
+        <at-carbon-view-button id="dropdown4" arrow position="topRight" view='<div class="dropdown-content style-scope arrows-demo purple"></div>'></at-carbon-view-button>
+      </div>
+      <div class="flex-6">
+        <h4>Dropdown position is top right, no arrow</h4>
+        <at-carbon-view-button id="dropdown4a" position="topRight" view='<div class="dropdown-content style-scope arrows-demo purple"></div>'></at-carbon-view-button>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "arrows-demo",
+    properties: {},
+    ready: function() {},
+    _handleTriggerOnTap: function(event) {
+      var dropdownId = event.currentTarget.getAttribute('dropdown-id');
+      this.$[dropdownId].toggle(event.currentTarget, event);
+    }
+  });
+
+</script>

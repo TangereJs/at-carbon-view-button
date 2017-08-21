@@ -19,7 +19,7 @@
     </style>
 
     <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
-    <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged"></at-core-dropdown>
+    <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged" arrow$="[[arrow]]"></at-core-dropdown>
 
   </template>
 </dom-module>
@@ -107,6 +107,18 @@
       },
 
       toggleOnly: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true an arrow will be displayed at the specified position
+       * 
+       * @property arrow
+       * @type Boolean
+       * @default false
+       */
+      arrow: {
         type: Boolean,
         value: false
       }
