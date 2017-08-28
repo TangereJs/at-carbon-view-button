@@ -17,12 +17,16 @@
       .dropdownTrigger {
         min-height: 40px;
       }
+
+      .placeholder-container {
+        width: 320px;
+      }
     </style>
 
     <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
     <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged" arrow$="[[arrow]]">
       <!-- we add placeholder here because it needs to be immediatelly displayed in the dropdown -->
-      <div id="placeholder"></div>
+      <div id="placeholder" class="placeholder-container"></div>
     </at-core-dropdown>
 
     <!-- We will render at-core-view into a backbuffer first, because otherwise iron-list will incorrectly compute x,y position of elements in the list -->
