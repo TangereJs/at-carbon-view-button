@@ -155,24 +155,23 @@
     },
 
     _handleDropdownToggle: function(relativeTo) {
+      if (this._contentChangeInProgress) return;
+      this._contentChangeInProgress = true;
+      
       if (this.$.dropdown.open) {
         this.$.dropdown.hide();
         return;
       }
 
-      if (this._contentChangeInProgress) return;
-      this._contentChangeInProgress = true;
-      
       var self = this;
-
       var coreView = this.__coreView = document.createElement('at-core-view');
+
       // We will render at-core-view into a backbuffer first, because otherwise iron-list will incorrectly compute x,y position of elements in the list
       // To see the incorrect computation append the coreView to the dropdown instead of backbuffer and comment out the try/catch on the line 183
       // Polymer.dom(this.$.dropdown).appendChild(coreView);
       Polymer.dom(this.$.backbuffer).appendChild(coreView);
         
       coreView.addEventListener('content-changed', function() {
-        self._contentChangeInProgress = false;
         // S1. the solution for dropdown position flickering is to hide the dropdown altogether
         self.$.dropdown.setAttribute('hidden', true);
         // @NOTE compatibility issues between at-carbon-view-button, at-core-dropdown and at-now-history come form the current implementation where at-core-dropdown is required to maintain shadow for the dropdown content. at-core-dropdown is (re)calculating the dimensions of #outline (holds the shadow) based on the dropdown content dimensions. It turns out that to provide at-core-dropdown knowledge of dropdown content dimensions you need to resort to tricks to pull it off. One such trick is bellow.
@@ -188,10 +187,10 @@
         // to see the incorrect position computaion comment out this try catch
         try {
           Polymer.dom(self.__coreView.parentElement).removeChild(self.__coreView);
+          // 3. this will trigger characterData mutation observer and return dropdownImpl from document.body to dropdown (this has no effect since dropdown is already in dropdown)
+          Polymer.dom(self.$.dropdown).appendChild(self.__coreView);
         } catch (e) {}
         // we attach the rendered core view to the dropdown
-        // 3. this will trigger characterData mutation observer and return dropdownImpl from document.body to dropdown (this has no effect since dropdown is already in dropdown)
-        Polymer.dom(self.$.dropdown).appendChild(self.__coreView);
         // we need to delay the update to improve the compatibility with at-now-history when at-now-history is in .view property (app-store use case)
 
         self.async(function() {
@@ -202,6 +201,8 @@
           // 4. we return the dropdownimpl to document.body
           self.$.dropdown.updateContainerAndOutlineSize();
           self.$.dropdown._getImplElement()._updateDropdownPosition(relativeTo);
+
+          self._contentChangeInProgress = false;
         }, 100);
       });
       
@@ -217,15 +218,17 @@
       // we open the dropdown
       this.$.dropdown.show(null, relativeTo);
 
-      this.async(function() {
+      // this.async(function() {
         // self.$.dropdown._returnImplToDocumentBody();
-      });
+      // });
     },
 
     _handleDropdownOpenChanged: function(event) {
       if (event.detail.value) return;
-      if (!this.__coreView) return; 
-      Polymer.dom(this.$.dropdown).removeChild(this.__coreView);
+      if (!this.__coreView) return;
+      try {
+        Polymer.dom(this.$.dropdown).removeChild(this.__coreView);
+      } catch (e) {}
       this.__coreView = null;
     }
   });
