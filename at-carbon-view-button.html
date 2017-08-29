@@ -201,6 +201,7 @@
           // self.$.dropdown.updateContainerAndOutlineSize();
           // 4. we return the dropdownimpl to document.body
           self.$.dropdown.updateContainerAndOutlineSize();
+          self.$.dropdown._getImplElement()._updateDropdownPosition(relativeTo);
         }, 100);
       });
       
