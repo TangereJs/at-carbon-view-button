@@ -225,7 +225,8 @@
       if (event.detail.value) return;
       if (!this.__coreView) return;
       try {
-        Polymer.dom(this.$.dropdown).removeChild(this.__coreView);
+        var impl = this.$.dropdown._getImplElement();
+        Polymer.dom(impl).removeChild(this.__coreView);
       } catch (e) {}
       this.__coreView = null;
     }
