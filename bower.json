@@ -9,7 +9,7 @@
     "at-core-dropdown": "TangereJs/at-core-dropdown#master",
     "at-core-view": "TangereJs/at-core-view#master",
     "at-doc-snippet": "TangereJs/at-doc-snippet#master",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#master",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "at-doc-viewer": "TangereJs/at-doc-viewer#master"
   }
 }
