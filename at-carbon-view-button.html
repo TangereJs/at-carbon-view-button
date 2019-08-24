@@ -86,6 +86,16 @@
         type: String,
         value: ""
       },
+      
+      minWidth: {
+        type: String,
+        value: ""
+      },
+      
+      minHeight: {
+        type: String,
+        value: ""
+      },
 
       value: {
         type: Object,
@@ -153,6 +163,7 @@
     },
 
     _handleDropdownToggle: function(relativeTo) {
+      
       if (this._contentChangeInProgress) return;
       this._contentChangeInProgress = true;
 
@@ -163,6 +174,10 @@
 
       var self = this;
       var coreView = this.__coreView = document.createElement('at-core-view');
+      
+      coreView.style.minWidth = this.minWidth;
+      coreView.style.minHeight = this.minHeight;
+      coreView.style.display = "block";
 
       // We will render at-core-view into a backbuffer first, because otherwise iron-list will incorrectly compute x,y position of elements in the list
       // To see the incorrect computation append the coreView to the dropdown instead of backbuffer and comment out the try/catch on the line 183
@@ -170,8 +185,10 @@
       Polymer.dom(this.$.backbuffer).appendChild(coreView);
 
       coreView.addEventListener('content-changed', function() {
+        
         // S1. the solution for dropdown position flickering is to hide the dropdown altogether
         self.$.dropdown.setAttribute('hidden', true);
+        
         // @NOTE compatibility issues between at-carbon-view-button, at-core-dropdown and at-now-history come form the current implementation where at-core-dropdown is required to maintain shadow for the dropdown content. at-core-dropdown is (re)calculating the dimensions of #outline (holds the shadow) based on the dropdown content dimensions. It turns out that to provide at-core-dropdown knowledge of dropdown content dimensions you need to resort to tricks to pull it off. One such trick is bellow.
         // If responsibility for displaying the shadow is transfered to the elements in the dropdown content all the tricks are not necessary anymore, since the element in the dropdown content knows its dimensions best and can adjust the size of shadow accordingly. Most of the time browser can do this automatically.
 
@@ -180,6 +197,7 @@
         if (!self.$.placeholder.hasAttribute('hidden')) {
           Polymer.dom(self.$.placeholder).setAttribute('hidden', 'true');
         }
+        
         // 2. AT this point dropdownimpl will be returned from document.body to dropdown
 
         // to see the incorrect position computaion comment out this try catch
