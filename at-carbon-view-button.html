@@ -23,8 +23,6 @@
       <div id="placeholder"></div>
     </at-core-dropdown>
 
-    <!-- We will render at-core-view into a backbuffer first, because otherwise iron-list will incorrectly compute x,y position of elements in the list -->
-    <div id="backbuffer" hidden></div>
   </template>
 </dom-module>
 <script>
@@ -179,10 +177,7 @@
       coreView.style.minHeight = this.minHeight;
       coreView.style.display = "block";
 
-      // We will render at-core-view into a backbuffer first, because otherwise iron-list will incorrectly compute x,y position of elements in the list
-      // To see the incorrect computation append the coreView to the dropdown instead of backbuffer and comment out the try/catch on the line 183
-      // Polymer.dom(this.$.dropdown).appendChild(coreView);
-      Polymer.dom(this.$.backbuffer).appendChild(coreView);
+      Polymer.dom(this.$.dropdown).appendChild(coreView);
 
       coreView.addEventListener('content-changed', function() {
         
@@ -199,13 +194,6 @@
         }
         
         // 2. AT this point dropdownimpl will be returned from document.body to dropdown
-
-        // to see the incorrect position computaion comment out this try catch
-        try {
-          Polymer.dom(self.__coreView.parentElement).removeChild(self.__coreView);
-          // 3. this will trigger characterData mutation observer and return dropdownImpl from document.body to dropdown (this has no effect since dropdown is already in dropdown)
-          Polymer.dom(self.$.dropdown).appendChild(self.__coreView);
-        } catch (e) {}
         // we attach the rendered core view to the dropdown
         // we need to delay the update to improve the compatibility with at-now-history when at-now-history is in .view property (app-store use case)
 
