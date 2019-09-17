@@ -17,7 +17,7 @@
       }
     </style>
 
-    <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown"></at-carbon-icon-button>
+    <at-carbon-icon-button id="dropdownTrigger" disabled$="[[disabled]]" hidden$="[[toggleOnly]]" icon="[[icon]]" color="[[color]]" on-tap="_toggleDropdown" badge-color="[[badgeColor]]" badge-label="[[badgeLabel]]" badge-close-on-click="[[badgeCloseOnClick]]"></at-carbon-icon-button>
     <at-core-dropdown id="dropdown" position="[[position]]" x-offset="[[xOffset]]" y-offset="[[yOffset]]" on-open-changed="_handleDropdownOpenChanged" arrow$="[[arrow]]">
       <!-- we add placeholder here because it needs to be immediatelly displayed in the dropdown -->
       <div id="placeholder"></div>
@@ -131,6 +131,21 @@
        * @default false
        */
       arrow: {
+        type: Boolean,
+        value: false
+      },
+
+      badgeColor: {
+          type: String,
+          value: ''
+        },
+
+      badgeLabel: {
+        type: String,
+        value: ''
+      },
+
+      badgeCloseOnClick: {
         type: Boolean,
         value: false
       }
